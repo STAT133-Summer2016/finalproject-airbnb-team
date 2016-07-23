@@ -8,9 +8,11 @@ library(jsonlite)
 #creates list of listing IDs by selecting node attribute whose value contains
 #the ID and then splicing it out of the attribute 
 list <- list() 
-for(i in 1:100) {
+for(i in 1:2) {
   list[[i]]<- c(read_html(
-    str_c("https://www.airbnb.com/s/Los-Angeles--CA--United-States?zoom=10&search_by_map=true&sw_lat=33.67235947194487&sw_lng=-118.63454013866334&ne_lat=34.21075767955577&ne_lng=-118.12092929881959&ss_id=6ftue19q&page=",i,"&s_tag=Cv-p6rL_")) %>% 
+    str_c("https://www.airbnb.com/s/New-York--NY--United-States?guests=1&ss_id=bojlvsbd&page=", 
+          i,
+          "&s_tag=pl-w20Qh")) %>% 
       html_nodes("a.media-photo.media-cover") %>% 
       html_attr("data-reactid") %>% 
       str_extract_all("\\$[0-9]*\\.") %>% 
@@ -21,14 +23,14 @@ for(i in 1:100) {
 #elements consisting of the variable/ listing detail, followed by the 
 #value 
 attr_list <- list()
-for(i in 1:100) {
+for(i in 1:2) {
   for(a in 1:18) {
-  attr_list[[(i-1)*18 + a]] <- read_html(
-          str_c("https://www.airbnb.com/rooms/", 
-                list[[i]][a], 
-                "?s=Cv-p6rL_")) %>% 
-    html_nodes("div.col-md-6 div") %>% 
-    html_text()
+    attr_list[[(i-1)*18 + a]] <- read_html(
+      str_c("https://www.airbnb.com/rooms/", 
+            list[[i]][a], 
+            "?guests=1&s=pl-w20Qh")) %>% 
+      html_nodes("div.col-md-6 div") %>% 
+      html_text()
   }
 }
 #initialize empty lists to fill 
