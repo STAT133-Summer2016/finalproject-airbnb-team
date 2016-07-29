@@ -1,11 +1,12 @@
-
-library(rvest)
+library(rvest, lib.loc = "~/Documents/rpackages")
 library(dplyr)
 library(stringr)
 library(readr)
 library(jsonlite)
 library(magrittr)
-library(selectr)
+library(selectr, lib.loc = "~/Documents/rpackages")
+library(WriteXLS, lib.loc = "~/Documents/rpackages")
+
 
 pricelistings <- read_html(
   str_c("https://www.airbnb.com/s/San-Francisco--CA--United-States?ss_id=u5xxjdru&page=1&s_tag=7w_5p4tC")) %>% 
@@ -22,7 +23,11 @@ for(i in 2:100) {
       html_nodes(".price-amount") %>% 
       html_text()
   )
+  print(i)
+  Sys.sleep(sample(seq(7, 10, .1), size = 1))
 }
+
+write_csv(as.data.frame(pricelistings), "SFprices")
 #Initialize first page of IDs then read in subsequent pages and add to 
 #vector containing IDs 
 IDs <- read_html(
@@ -43,8 +48,11 @@ for(i in 2:100) {
       html_attr("data-reactid") %>% 
       str_extract_all("\\$[0-9]*\\.") %>% 
       str_replace_all("\\$([0-9]*)\\.", "\\1"))
+  print(i)
+  Sys.sleep(sampe(seq(10, 15, .1), size = 1))
 }
 
+write_csv(as.data.frame(IDs), "SFids")
 #uses relevant nodes from listing pages to create vector composed of 
 #elements consisting of the variable/ listing detail, followed by the 
 #value 
@@ -56,7 +64,10 @@ for(i in 1:length(IDs)) {
           "?s=7w_5p4tC")) %>% 
     html_nodes("div.col-md-6 div") %>% 
     html_text()
+  print(i)
+  Sys.sleep(sample(seq(7, 11, .1), size = 1))
 }
+
 #initialize empty lists to fill 
 colnames <- list()
 colvals <- list()
@@ -93,12 +104,8 @@ for(i in 2:length(attr_list)) {
 }
 #join current element with the aggregate table 
 #comprised of previous elements 
-for(i in 2:length(df_list)) {
-  super_table <- full_join(df_list[[i]], super_table) 
-}
+super_table <- bind_rows(df_list)
 
-super_table <- super_table %>% 
-  mutate(price = pricelistings)
 
 WriteXLS(super_table, "SFdf")
 
