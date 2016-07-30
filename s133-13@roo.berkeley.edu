@@ -49,7 +49,7 @@ for(i in 2:100) {
       str_extract_all("\\$[0-9]*\\.") %>% 
       str_replace_all("\\$([0-9]*)\\.", "\\1"))
   print(i)
-  Sys.sleep(sample(seq(10, 15, .1), size = 1))
+  Sys.sleep(sampe(seq(10, 15, .1), size = 1))
 }
 
 write_csv(as.data.frame(IDs), "NYids")
