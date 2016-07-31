@@ -46,7 +46,7 @@ page1 = full_join(dbl_name1, dbl_price1) %>%
   full_join(dbl_rating1)
 
 #Page 2
-dbl_url2 = read_html("http://www.trivago.com/?iPathId=34470&bDispMoreFilter=false&aDateRange%5Barr%5D=2016-08-28&aDateRange%5Bdep%5D=2016-08-29&aCategoryRange=0%2C1%2C2%2C3%2C4%2C5&iRoomType=7&sOrderBy=relevance%20desc&aPartner=&aOverallLiking=1%2C2%2C3%2C4%2C5&iOffset=25&iLimit=25&iIncludeAll=0&bTopDealsOnly=false&iViewType=0&aPriceRange%5Bto%5D=0&aPriceRange%5Bfrom%5D=0&aGeoCode%5Blng%5D=-87.624039&aGeoCode%5Blat%5D=41.890442&bIsSeoPage=false&mgo=false&th=false&aHotelTestClassifier=&bSharedRooms=false&bIsSitemap=false&rp=&cpt=3447003&iFilterTab=0&")
+dbl_url2 = read_html("http://www.trivago.com/?iPathId=34470&bDispMoreFilter=false&aDateRange%5Barr%5D=2016-08-28&aDateRange%5Bdep%5D=2016-08-29&aCategoryRange=0%2C1%2C2%2C3%2C4%2C5&iRoomType=7&sOrderBy=relevance%20desc&aPartner=&aOverallLiking=1%2C2%2C3%2C4%2C5&iOffset=25&iLimit=25&iIncludeAll=0&bTopDealsOnly=false&iViewType=0&aPriceRange%5Bfrom%5D=0&aPriceRange%5Bto%5D=0&aGeoCode%5Blng%5D=-87.624039&aGeoCode%5Blat%5D=41.890442&bIsSeoPage=false&mgo=false&th=false&aHotelTestClassifier=&bSharedRooms=false&bIsSitemap=false&rp=&cpt=3447003&iFilterTab=0&")
 
 ##Name of hotel
 dbl_name2 = dbl_url2 %>% 
@@ -171,5 +171,5 @@ page4 = full_join(dbl_name4, dbl_price4) %>%
 dbl_final = rbind(page1, page2, page3, page4) %>% 
   select(-a)
 
-write_csv(dbl_final, "ny_dbl.csv")
+write_csv(dbl_final, "ch_dbl.csv")
 
