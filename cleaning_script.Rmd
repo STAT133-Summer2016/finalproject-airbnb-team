@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 #sf 
+#this chunk creates sf_df, a dataframe with obs from SF
 
 sf_df <- read.xls("SFdf")
   sf_df <- sf_df %>%
@@ -34,6 +35,8 @@ sf_final <- sf_df %>%
 
 ```{r}
 # new york city
+#this chunk creates a ny_df, a dataframe with obs from NYC
+
 ny_df <- read.xls("NYdf") %>%
   ny_df <- ny_df %>%
   mutate(e= c(1:1800))
@@ -52,6 +55,7 @@ ny_final <- ny_df %>%
 
 ```{r}
 #los angeles 
+#this chunk creates la_df, a dataframe with obs from LA
 la_df <- read.xls("LAdf")
   la_df <- la_df %>%
     mutate(e = c(1:1800))
@@ -71,6 +75,7 @@ la_final <- la_df %>%
 
 ```{r}
 #chicago
+#this chunk creates ch_df, a dataframe with obs from Chicago
 
 ch_df <- read.xls("Chicagodf.xls")
   ch_df <- ch_df %>%
@@ -94,7 +99,8 @@ ch_final <- ch_df %>%
 
 
 ```{r}
-# csv outputs; sf, nyc, la, chica, 4 cities
+#this chunk creates the 5 csv's with 17 common observations among the 4 cities
+# csv outputs: cleaned_sf.csv, cleaned_la.csv, cleaned_ch.csv, cleaned_ny.csn, four_cities.csv
 
 sf_cols <- names(sf_final)
 la_cols <- names(la_final)
@@ -111,7 +117,7 @@ sf_final_2 <- sf_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
          Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(sf_final_2, path = "cleaned_sf")
+write_csv(sf_final_2, path = "cleaned_sf.csv")
 
 la_final_2 <- la_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
@@ -140,6 +146,65 @@ write_csv(four_cities, path = "four_cities.csv")
 ```
 
 
+```{r}
+# this chunk cleans the four_cities csv
+four_cities <- read_csv("four_cities.csv")
+
+#this code replaces all NAs with string 'unspecified' and taking out time specifications in Check.In column
+four_cities[is.na(four_cities)] <- "unspecified"
+four_cities = four_cities %>%
+  mutate(Check.In = str_replace(Check.In, "^Anytime after ","")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(next day\\)", "")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(midnight\\)", "")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(noon\\)", ""))
+
+four_cities = four_cities %>%
+  mutate(Check.Out = str_replace(Check.Out, " \\(midnight\\)", "")) %>%
+  mutate(Check.Out = str_replace(Check.Out, " \\(noon\\)", ""))
 
 
+#this code creates a new column, earliest.check.in
+check_in_times_PM <- four_cities %>%
+  filter(Check.In = str_detect(Check.In, "^[1]?[123456789]?PM")) %>%
+  mutate(Earliest.Check.In = str_extract(Check.In, "^[123456789]?PM"))
+
+check_in_times_AM <- four_cities %>%
+filter(Check.In = str_detect(Check.In, "^[1]?[123456789]?AM")) %>%
+  mutate(Earliest.Check.In = str_extract(Check.In, "^[1]?[123456789]?AM"))
+
+check_in_flexible <- four_cities %>%
+  filter(Check.In = str_detect(Check.In, "Flexible")) %>%
+  mutate(Earliest.Check.In = "Flexible")
+
+check_in_unspecified <- four_cities %>%
+  filter(Check.In = str_detect(Check.In, "unspecified")) %>%
+  mutate(Earliest.Check.In = "Unspecified")
+
+four_cities <- check_in_times_AM %>%
+  rbind(check_in_times_PM) %>%
+  rbind(check_in_unspecified) %>%
+  rbind(check_in_flexible)
+
+#this code cleans the Bathroom column; take out "shared" or "private"
+four_cities <- four_cities %>%
+  mutate(Bathrooms = str_replace(Bathrooms, " \\(Private\\)", "")) %>%
+  mutate(Bathrooms = str_replace(Bathrooms, " \\(Shared\\)", ""))
+
+#this code cleans the Extra.people column
+four_cities <- four_cities %>%
+  mutate(Extra.people = str_replace(Extra.people," / night after", "")) %>%
+  mutate(Extra.people = str_replace(Extra.people," [1]?[02345] guest[s]?", "")) 
+
+#this code cleans the Weekly.discount and Monthly.discount columns
+four_cities <- four_cities %>%
+  mutate(Weekly.Discount = str_replace(Weekly.Discount,"%","")) %>%
+  mutate(Monthly.Discount = str_replace(Monthly.Discount, "%", ""))
+
+names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)", 
+                        "Check.In", "Check.Out", "Property.Type", "Room.Type",
+                        "Cost.Per.Extra.Person", "Weekly.Discount(%)", "Monthly.Discount(%)",
+                        "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
+                        "City", "Earliest.Check.In")
+write_csv(four_cities, path = "clean_four_cities.csv")
+```
 
