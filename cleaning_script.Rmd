@@ -117,26 +117,26 @@ la_final_2 <- la_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
          Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(la_final_2, path = "cleaned_la")
+write_csv(la_final_2, path = "cleaned_la.csv")
 
 ch_final_2 <- ch_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
          Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(ch_final_2, path = "cleaned_ch")
+write_csv(ch_final_2, path = "cleaned_ch.csv")
 
 ny_final_2 <- ny_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
          Monthly.discount, Cancellation, Response.time, ID, price, e, city)
 ny_final_2 <- ny_final_2[,-c(1,2)]
-write_csv(ny_final_2, path = "cleaned_ny")
+write_csv(ny_final_2, path = "cleaned_ny.csv")
 
 four_cities <- rbind(sf_final_2,ny_final_2) %>%
   rbind(la_final_2) %>%
   rbind(ch_final_2)
   
-write_csv(four_cities, path = "four_cities")  
+write_csv(four_cities, path = "four_cities.csv")  
 ```
 
 
