@@ -205,6 +205,7 @@ names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)",
                         "Cost.Per.Extra.Person", "Weekly.Discount(%)", "Monthly.Discount(%)",
                         "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
                         "City", "Earliest.Check.In")
-write_csv(four_cities, path = "clean_four_cities.csv")
+write_csv(four_cities, path = "cleaned_four_cities.csv")
+
 ```
 
