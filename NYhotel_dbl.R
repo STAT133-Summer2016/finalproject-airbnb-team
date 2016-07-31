@@ -164,6 +164,7 @@ names(dbl_price4) = "Price"
 dbl_price4 = dbl_price4 %>% 
   mutate(a = c(1:25))
 
+
 ##Combine all into one data frame
 page4 = full_join(dbl_name4, dbl_price4) %>% 
   full_join(dbl_rating4)
