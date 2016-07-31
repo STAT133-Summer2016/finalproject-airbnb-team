@@ -26,6 +26,6 @@ ch_sgl <- ch_sgl %>%
 colnames(ch_sgl)[6] <- "Bed(s)"
 
 ch_final <- rbind(ch_sgl,ch_dbl)
-write_csv(ch_final, path = "cleaned_ch_hotel")
+write_csv(ch_final, path = "cleaned_ch_hotel.csv")
 ```
 
