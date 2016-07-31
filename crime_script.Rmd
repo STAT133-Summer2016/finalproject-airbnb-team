@@ -1,0 +1,50 @@
+---
+title: "crime_script"
+author: "judy teng"
+date: "July 30, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rvest)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(xml2)
+
+```
+
+```{r}
+# chicago crime
+web = "http://crime.chicagotribune.com/chicago/community#property-table"
+
+Crimedf = read_html(web) %>% 
+  html_nodes(".community-area-rankings .table") %>% 
+  html_table(fill = TRUE) %>% 
+  as.data.frame() %>% 
+  select(Community.area.2, Arson, Theft, Burglary, Motor.vehicle.theft)
+
+
+
+```
+
+```{r}
+#los angeles crime
+```
+
+```{r}
+#new york crime
+
+```
+
+```{r}
+# san francisco crime
+
+```
+
+
+
