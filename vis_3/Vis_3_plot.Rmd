@@ -16,7 +16,7 @@ library(tidyr)
 library(readr)
 library(stringr)
 
-discount <- read_csv("cleaned_four_cities.csv")
+discount <- read_csv("updated_cleaned_four_cities.csv")
 
 discount <- discount %>%
   select(`Weekly.Discount(%)`,`Monthly.Discount(%)`, Price, City) %>%

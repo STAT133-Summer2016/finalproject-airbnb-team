@@ -10,8 +10,9 @@ library(ggplot2)
 library(readr)
 library(dplyr)
 library(tidyr)
+library(stringr)
 
-price_guest_df <- read_csv("cleaned_four_cities.csv") %>%
+price_guest_df <- read_csv("updated_cleaned_four_cities.csv") %>%
   select(Accomodates, Price, City) %>%
   mutate(City = factor(City, 
                        levels = c("la","sf","ch","nyc"),

@@ -1,4 +1,10 @@
-citydf = read_csv("four_cities.csv") %>% 
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+
+citydf = read_csv("updated_four_cities.csv") %>% 
   mutate(city = factor(city, levels = c("la", "ch", "sf", "nyc"), 
                        labels = c("Los Angeles", "Chicago", "San Francisco", "New York"))) %>% 
   group_by(Room.type, city) %>% 

@@ -11,11 +11,20 @@ library(gdata)
 ```
 
 ```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(WriteXLS)
+library(gdata)
+```
+
+
+```{r}
 #sf 
 #this chunk creates sf_df, a dataframe with obs from SF
 
 sf_df <- read.xls("SFdf")
-  sf_df <- sf_df %>%
+  sf_final <- sf_df %>%
     mutate(e= c(1:1782),
            price_per_indv = price / Accommodates,
            city = "sf") 
@@ -36,9 +45,10 @@ sf_df <- read.xls("SFdf")
 # new york city
 #this chunk creates a ny_df, a dataframe with obs from NYC
 
-ny_df <- read.xls("NYdf") %>%
+ny_df <- read.xls("NYdf")
+ny_final <- ny_df %>%
   mutate(e= 1:1800,
-         price_per_indv = price / Accommodates,
+         price_per_indv = as.numeric(price) / as.numeric(Accommodates),
          city = "ny")
 
 #ny_prices <- read_csv("NYprices")        ny price & id not needed; alreading in ny_df
@@ -55,7 +65,7 @@ ny_df <- read.xls("NYdf") %>%
 #los angeles 
 #this chunk creates la_df, a dataframe with obs from LA
 la_df <- read.xls("LAdf")
-  la_df <- la_df %>%
+  la_final <- la_df %>%
     mutate(e = c(1:1800),
            price_per_indv = price / Accommodates,
            city = "la")
@@ -75,7 +85,7 @@ la_df <- read.xls("LAdf")
 #this chunk creates ch_df, a dataframe with obs from Chicago
 
 ch_df <- read.xls("Chicagodf.xls")
-  ch_df <- ch_df %>%
+  ch_final <- ch_df %>%
     mutate(e= c(1:1799),
            price_per_indv = price / Accommodates,
            city = "ch")
@@ -111,39 +121,38 @@ la_common_cols <- la_cols[la_cols %in% sf_common_cols]
 sf_final_2 <- sf_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
-         Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(sf_final_2, path = "cleaned_sf.csv")
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(sf_final_2, path = "updated_cleaned_sf.csv")
 
 la_final_2 <- la_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
-         Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(la_final_2, path = "cleaned_la.csv")
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(la_final_2, path = "updated_cleaned_la.csv")
 
 ch_final_2 <- ch_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
-         Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-write_csv(ch_final_2, path = "cleaned_ch.csv")
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(ch_final_2, path = "updated_cleaned_ch.csv")
 
 ny_final_2 <- ny_final %>%
   select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
          Property.type, Room.type, Extra.people, Weekly.discount, 
-         Monthly.discount, Cancellation, Response.time, ID, price, e, city)
-ny_final_2 <- ny_final_2[,-c(1,2)]
-write_csv(ny_final_2, path = "cleaned_ny.csv")
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(ny_final_2, path = "updated_cleaned_ny.csv")
 
 four_cities <- rbind(sf_final_2,ny_final_2) %>%
   rbind(la_final_2) %>%
   rbind(ch_final_2)
   
-write_csv(four_cities, path = "four_cities.csv")  
+write_csv(four_cities, path = "updated_four_cities.csv")  
 ```
 
 
 ```{r}
 # this chunk cleans the four_cities csv
-four_cities <- read_csv("four_cities.csv")
+four_cities <- read_csv("updated_four_cities.csv")
 
 #this code replaces all NAs with string 'unspecified' and taking out time specifications in Check.In column
 four_cities[is.na(four_cities)] <- "unspecified"
@@ -192,15 +201,15 @@ four_cities <- four_cities %>%
 
 #this code cleans the Weekly.discount and Monthly.discount columns
 four_cities <- four_cities %>%
-  mutate(Weekly.Discount = str_replace(Weekly.Discount,"%","")) %>%
-  mutate(Monthly.Discount = str_replace(Monthly.Discount, "%", ""))
+  mutate(Weekly.discount = str_replace(Weekly.discount,"%","")) %>%
+  mutate(Monthly.discount = str_replace(Monthly.discount, "%", ""))
 
 names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)", 
                         "Check.In", "Check.Out", "Property.Type", "Room.Type",
                         "Cost.Per.Extra.Person", "Weekly.Discount(%)", "Monthly.Discount(%)",
                         "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
                         "City", "Earliest.Check.In")
-write_csv(four_cities, path = "cleaned_four_cities.csv")
+write_csv(four_cities, path = "updated_cleaned_four_cities.csv")
 
 ```
 
