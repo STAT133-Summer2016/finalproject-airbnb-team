@@ -16,7 +16,9 @@ library(gdata)
 
 sf_df <- read.xls("SFdf")
   sf_df <- sf_df %>%
-    mutate(e= c(1:1782))
+    mutate(e= c(1:1782),
+           price_per_indv = price / Accommodates,
+           city = "sf") 
   
 #sf_prices <- read_csv("SFprices")         sf prices and ids not needed; already in sf_df
 #sf_prices <- sf_prices[-c(1:18),]
@@ -26,10 +28,6 @@ sf_df <- read.xls("SFdf")
 #sf_ids <- read_csv("SFids")
  # sf_ids <- sf_ids %>%
   #  mutate(e = c(1:1782))
-
-sf_final <- sf_df %>%
-  mutate(city = "sf")
-
 ```
 
 
@@ -39,8 +37,9 @@ sf_final <- sf_df %>%
 #this chunk creates a ny_df, a dataframe with obs from NYC
 
 ny_df <- read.xls("NYdf") %>%
-  ny_df <- ny_df %>%
-  mutate(e= c(1:1800))
+  mutate(e= 1:1800,
+         price_per_indv = price / Accommodates,
+         city = "ny")
 
 #ny_prices <- read_csv("NYprices")        ny price & id not needed; alreading in ny_df
   #ny_prices <- ny_prices %>%
@@ -49,8 +48,6 @@ ny_df <- read.xls("NYdf") %>%
 #ny_ids <- read_csv("NYids") 
   #ny_ids <- ny_ids  %>%
   #mutate(e = c(1:1800))
-ny_final <- ny_df %>%
-  mutate(city = "nyc")
 ```
 
 
@@ -59,7 +56,9 @@ ny_final <- ny_df %>%
 #this chunk creates la_df, a dataframe with obs from LA
 la_df <- read.xls("LAdf")
   la_df <- la_df %>%
-    mutate(e = c(1:1800))
+    mutate(e = c(1:1800),
+           price_per_indv = price / Accommodates,
+           city = "la")
   
 #la_prices <- read_csv("LAprices")      la price and ids not needed; already in la_df
  # la_prices <- la_prices %>%
@@ -68,9 +67,6 @@ la_df <- read.xls("LAdf")
 #la_ids <- read_csv("LAids")
  # la_ids <- la_ids %>%
   #  mutate(e = c(1:1800))
-  
-la_final <- la_df %>%
-  mutate(city = "la")
 ```
 
 
@@ -80,7 +76,9 @@ la_final <- la_df %>%
 
 ch_df <- read.xls("Chicagodf.xls")
   ch_df <- ch_df %>%
-    mutate(e= c(1:1799))
+    mutate(e= c(1:1799),
+           price_per_indv = price / Accommodates,
+           city = "ch")
   
 #ch_prices <- read.csv("Chicagoprices")       chicago id and price not needed, already in ch_df
 #ch_prices <- ch_prices[-1,] %>%
@@ -92,10 +90,6 @@ ch_df <- read.xls("Chicagodf.xls")
 #ch_ids <- ch_ids[-1,] %>%
  # as.data.frame() %>%
   #  mutate(e = c(1:1799))
-
-ch_final <- ch_df %>%
-  full_join(ch_prices) %>%
-  mutate(city = "ch")
 ```
 
 
