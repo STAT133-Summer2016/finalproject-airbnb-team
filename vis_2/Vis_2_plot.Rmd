@@ -13,7 +13,7 @@ library(tidyr)
 library(stringr)
 
 price_guest_df <- read_csv("updated_cleaned_four_cities.csv") %>%
-  select(Accomodates, Price, City, price_p) %>%
+  select(Accomodates, Price, City, Price.Per.Indv) %>%
   mutate(City = factor(City, 
                        levels = c("la","sf","ch","ny"),
                        labels= c("Los Angeles","San Francisco","Chicago","New York City")))
