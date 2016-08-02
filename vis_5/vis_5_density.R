@@ -4,44 +4,47 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 
-four_cities <- read.csv("cleaned_four_cities.csv")
+four_cities <- read.csv("updated_cleaned_four_cities.csv")
 
 
 ##CLEANING CHECKED IN
 
-View(unique(four_cities$Earliest.Check.In))
+View(unique(four_cities$Check.In))
 
 #disregarding those observations with an unspecified/flexible check in or check out time
 four_cities <- four_cities %>% 
-  filter(!Earliest.Check.In == "Unspecified") %>% 
-  filter(!Earliest.Check.In == "Flexible") %>% 
-  filter(!is.na(Earliest.Check.In)) %>% 
+  filter(!Check.In == "Unspecified") %>% 
+  filter(!Check.In == "Flexible") %>% 
+  filter(!is.na(Check.In)) %>% 
   filter(!Check.Out == "unspecified")
+
+#only concerned with earliest check in times; removing ranges
+four_cities$Check.In <- str_replace_all(four_cities$Check.In, "[ ]-.*", "")
 
 
 #filters only pm check in values, removes pm, converts into numeric value and adds 12
 #to put time into a 0-24hr interval for graphing
 PM_only <- four_cities %>% 
-  filter(str_detect(Earliest.Check.In, "PM")) %>% 
-  filter(!str_detect(Earliest.Check.In, "12")) %>% 
-  mutate(Earliest.Check.In = as.numeric(str_replace_all(Earliest.Check.In, "PM", ""))) %>% 
-  mutate(Earliest.Check.In = Earliest.Check.In + 12)
+  filter(str_detect(Check.In, "PM")) %>% 
+  filter(!str_detect(Check.In, "12")) %>% 
+  mutate(Check.In = as.numeric(str_replace_all(Check.In, "PM", ""))) %>% 
+  mutate(Check.In = Check.In + 12)
 
 #filters only am check in values, remvoes am, converts into numeric value
 AM_only <- four_cities %>% 
-  filter(str_detect(Earliest.Check.In, "AM")) %>% 
-  filter(!str_detect(Earliest.Check.In, "12")) %>% 
-  mutate(Earliest.Check.In = as.numeric(str_replace_all(Earliest.Check.In, "AM", "")))
+  filter(str_detect(Check.In, "AM")) %>% 
+  filter(!str_detect(Check.In, "12")) %>% 
+  mutate(Check.In = as.numeric(str_replace_all(Check.In, "AM", "")))
 
 #for one case of midnight and noontimes
 twelve_pm <- four_cities %>% 
-  filter(str_detect(Earliest.Check.In, "12PM")) %>% 
-  mutate(Earliest.Check.In = as.numeric(str_replace_all(Earliest.Check.In, "PM", "")))
+  filter(str_detect(Check.In, "12PM")) %>% 
+  mutate(Check.In = as.numeric(str_replace_all(Check.In, "PM", "")))
 
 twelve_am <- four_cities %>% 
-  filter(str_detect(Earliest.Check.In, "12AM")) %>% 
-  mutate(Earliest.Check.In = as.numeric(str_replace_all(Earliest.Check.In, "AM", ""))) %>% 
-  mutate(Earliest.Check.In = Earliest.Check.In + 12)
+  filter(str_detect(Check.In, "12AM")) %>% 
+  mutate(Check.In = as.numeric(str_replace_all(Check.In, "AM", ""))) %>% 
+  mutate(Check.In = Check.In + 12)
   
 dfs <- list(PM_only, AM_only, twelve_pm, twelve_am)
 
@@ -65,7 +68,7 @@ cleaned_time_df <- cleaned_time_df %>%
 cleaned_time_df <- full_join(no_twelves_out, cleaned_time_df)
 
                             
-ggplot(cleaned_time_df, aes(Earliest.Check.In, fill = City, colour = City)) +
+ggplot(cleaned_time_df, aes(Check.In, fill = City, colour = City)) +
   geom_density(alpha = 0.4) +
   ggtitle("Density Plot of AirBNB Check In Times") +
   xlab("Time of Day") +
