@@ -208,7 +208,7 @@ names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)",
                         "Check.In", "Check.Out", "Property.Type", "Room.Type",
                         "Cost.Per.Extra.Person", "Weekly.Discount(%)", "Monthly.Discount(%)",
                         "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
-                        "City", "Earliest.Check.In")
+                        "City", "Price.Per.Indv","Earliest.Check.In")
 write_csv(four_cities, path = "updated_cleaned_four_cities.csv")
 
 ```

@@ -1,4 +1,4 @@
-Accomodates,Bathroom(s),Bedroom(s),Bed(s),Check.In,Check.Out,Property.Type,Room.Type,Cost.Per.Extra.Person,Weekly.Discount(%),Monthly.Discount(%),Cancellation.Policy,Response.Time,ID,Price,e,City,Earliest.Check.In,NA
+Accomodates,Bathroom(s),Bedroom(s),Bed(s),Check.In,Check.Out,Property.Type,Room.Type,Cost.Per.Extra.Person,Weekly.Discount(%),Monthly.Discount(%),Cancellation.Policy,Response.Time,ID,Price,e,City,Price.Per.Indv,Earliest.Check.In
 2,1,1,1,11AM,3PM,Apartment,Private room,No Charge,unspecified,unspecified,Strict,unspecified,11340259,119,62,sf,59.5,11AM
 2,1,1,1,9AM,3PM,Apartment,Entire home/apt,No Charge,18,42,Strict,unspecified,7952959,78,66,sf,39,9AM
 1,1,1,1,11AM - 11PM,12PM,Apartment,Shared room,unspecified,3,5,Moderate,within an hour,1408281,129,130,sf,129,11AM
