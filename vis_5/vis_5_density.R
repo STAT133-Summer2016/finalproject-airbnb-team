@@ -67,7 +67,8 @@ cleaned_time_df <- cleaned_time_df %>%
 
 cleaned_time_df <- full_join(no_twelves_out, cleaned_time_df)
 
-                            
+
+#check in time density plot                            
 ggplot(cleaned_time_df, aes(Check.In, fill = City, colour = City)) +
   geom_density(alpha = 0.4) +
   ggtitle("Density Plot of AirBNB Check In Times") +
@@ -75,6 +76,7 @@ ggplot(cleaned_time_df, aes(Check.In, fill = City, colour = City)) +
   ylab("Density") +
   scale_x_continuous(limits=c(0,24), breaks=seq(0,24,4))
 
+#check out time density plot
 ggplot(cleaned_time_df, aes(Check.Out, fill = City, colour = City)) +
   geom_density(alpha = 0.4) +
   ggtitle("Density Plot of AirBNB Check Out Times") +
