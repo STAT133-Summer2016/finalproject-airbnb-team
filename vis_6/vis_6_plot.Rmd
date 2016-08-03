@@ -27,42 +27,37 @@ la <- four_cities %>%
 
 #mutating new columns named price range to be factorized for each city with set cutoff prices
 sf <- sf %>% 
-  mutate(price_range = Price) %>% 
-  mutate(price_range = ifelse(price_range < 40, "0-39", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 40 & price_range < 100, "40-99", as.character(price_range))) %>% 
+  mutate(price_range = (Price)) %>% 
+  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
   mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
 mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range > 300, "300+", as.character(price_range)))
+  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
 sf$price_range <- as.factor(sf$price_range)
 
 
 ny <- ny %>% 
-  mutate(price_range = Price) %>% 
-  mutate(price_range = ifelse(price_range < 40, "0-39", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 40 & price_range < 100, "40-99", as.character(price_range))) %>% 
+  mutate(price_range = (Price)) %>% 
+  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
   mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
 mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range > 300, "300+", as.character(price_range)))
-ny$price_range <- as.factor(ny$price_range)
+  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
+sf$price_range <- as.factor(sf$price_range)
 
 ch <- ch %>% 
-  mutate(price_range = Price) %>% 
-  mutate(price_range = ifelse(price_range < 40, "0-39", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 40 & price_range < 100, "40-99", as.character(price_range))) %>% 
+  mutate(price_range = (Price)) %>% 
+  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
   mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
 mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range > 300, "300+", as.character(price_range)))
+  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
 ch$price_range <- as.factor(ch$price_range)
 
 la <- la %>% 
-  mutate(price_range = Price) %>% 
-  mutate(price_range = ifelse(price_range < 40, "0-39", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 40 & price_range < 100, "40-99", as.character(price_range))) %>% 
+  mutate(price_range = (Price)) %>% 
+  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
   mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
 mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range > 300, "300+", as.character(price_range)))
+  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
 la$price_range <- as.factor(la$price_range)
-
 
 #plotting as bar charts
 ggplot(sf) +
@@ -92,5 +87,6 @@ ggplot(la) +
        y = "Count",
        title = "Price Range Summary of Airbnb Rooms in Los Angeles"
   )
+
 ```
 
