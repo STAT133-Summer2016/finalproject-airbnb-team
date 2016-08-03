@@ -111,5 +111,5 @@ ggplot(cleaned_time_df) +
   scale_x_continuous(limits=c(6,24), 
                      breaks=seq(6,24,4)) +
   guides(color = "none") +
-  theme_gdocs()
+  theme_fivethirtyeight()
 
