@@ -11,81 +11,29 @@ library(dplyr)
 
 four_cities <- read.csv("updated_cleaned_four_cities.csv")
 
-#creating separate data frames for each city
-sf <- four_cities %>% 
-  filter(City == "sf") 
-
-ny <- four_cities %>% 
-  filter(City == "ny") 
-
-ch <- four_cities %>% 
-  filter(City == "ch") 
-
-la <- four_cities %>% 
-  filter(City == "la") 
-
-
-#mutating new columns named price range to be factorized for each city with set cutoff prices
-sf <- sf %>% 
+four_cities <- four_cities %>% 
   mutate(price_range = (Price)) %>% 
-  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
-mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
-sf$price_range <- as.factor(sf$price_range)
+  mutate(price_range = ifelse(Price < 50, "0-49", Price)) %>% 
+  mutate(price_range = ifelse(Price >= 50 & Price < 100, "50-99", as.character(price_range))) %>% 
+  mutate(price_range = ifelse(Price >= 100 & Price < 200, "100-199", as.character(price_range))) %>% 
+mutate(price_range = ifelse(Price >= 200 & Price < 300, "200-299", as.character(price_range))) %>% 
+  mutate(price_range = ifelse(Price >= 300, "300+", as.character(price_range)))
+four_cities$price_range <- factor(four_cities$price_range, levels = c("0-49", "50-99", "100-199", "200-299", "300+"))
 
 
-ny <- ny %>% 
-  mutate(price_range = (Price)) %>% 
-  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
-mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
-sf$price_range <- as.factor(sf$price_range)
+city_names <- c(
+                    `ch` = "Chicago",
+                    `la` = "Los Angeles",
+                    `ny` = "New York",
+                    `sf` = "San Francisco"
+                    )
 
-ch <- ch %>% 
-  mutate(price_range = (Price)) %>% 
-  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
-mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
-ch$price_range <- as.factor(ch$price_range)
-
-la <- la %>% 
-  mutate(price_range = (Price)) %>% 
-  mutate(price_range = ifelse(price_range < 100, "0-99", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 100 & price_range < 200, "100-199", as.character(price_range))) %>% 
-mutate(price_range = ifelse(price_range >= 200 & price_range < 300, "200-299", as.character(price_range))) %>% 
-  mutate(price_range = ifelse(price_range >= 300, "300+", as.character(price_range)))
-la$price_range <- as.factor(la$price_range)
-
-#plotting as bar charts
-ggplot(sf) +
+ggplot(four_cities) +
   geom_bar(aes(price_range)) +
+  facet_wrap(~City, labeller = as_labeller(city_names)) +
   labs(x = "Price Range (in USD)",
        y = "Count",
-       title = "Price Range Summary of Airbnb Rooms in San Francisco"
-  )
-
-ggplot(ch) +
-  geom_bar(aes(price_range)) +
-  labs(x = "Price Range (in USD)",
-       y = "Count",
-       title = "Price Range Summary of Airbnb Rooms in Chicago"
-  )
-
-ggplot(ny) +
-  geom_bar(aes(price_range)) +
-  labs(x = "Price Range (in USD)",
-       y = "Count",
-       title = "Price Range Summary of Airbnb Rooms in New York"
-  )
-
-ggplot(la) +
-  geom_bar(aes(price_range)) +
-  labs(x = "Price Range (in USD)",
-       y = "Count",
-       title = "Price Range Summary of Airbnb Rooms in Los Angeles"
+       title = "Price Range Summary of Airbnb Rooms"
   )
 
 ```
