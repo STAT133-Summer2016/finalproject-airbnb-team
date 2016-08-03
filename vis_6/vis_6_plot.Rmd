@@ -29,7 +29,7 @@ city_names <- c(
                     )
 
 ggplot(four_cities) +
-  geom_bar(aes(price_range)) +
+  geom_bar(position = "dodge", aes(price_range, fill = Cancellation.Policy)) +
   facet_wrap(~City, labeller = as_labeller(city_names)) +
   labs(x = "Price Range (in USD)",
        y = "Count",
