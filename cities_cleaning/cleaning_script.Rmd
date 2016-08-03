@@ -7,7 +7,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(gdata)
 ```
 
 ```{r}
@@ -16,6 +15,7 @@ library(tidyr)
 library(dplyr)
 library(WriteXLS)
 library(gdata)
+library(stringr)
 ```
 
 
@@ -27,7 +27,7 @@ sf_df <- read.xls("SFdf")
   sf_final <- sf_df %>%
     mutate(e= c(1:1782),
            price_per_indv = price / Accommodates,
-           city = "sf") 
+           city = "San Francisco") 
   
 #sf_prices <- read_csv("SFprices")         sf prices and ids not needed; already in sf_df
 #sf_prices <- sf_prices[-c(1:18),]
@@ -49,7 +49,7 @@ ny_df <- read.xls("NYdf")
 ny_final <- ny_df %>%
   mutate(e= 1:1800,
          price_per_indv = as.numeric(price) / as.numeric(Accommodates),
-         city = "ny")
+         city = "New York")
 
 #ny_prices <- read_csv("NYprices")        ny price & id not needed; alreading in ny_df
   #ny_prices <- ny_prices %>%
@@ -68,7 +68,7 @@ la_df <- read.xls("LAdf")
   la_final <- la_df %>%
     mutate(e = c(1:1800),
            price_per_indv = price / Accommodates,
-           city = "la")
+           city = "Los Angeles")
   
 #la_prices <- read_csv("LAprices")      la price and ids not needed; already in la_df
  # la_prices <- la_prices %>%
@@ -88,7 +88,7 @@ ch_df <- read.xls("Chicagodf.xls")
   ch_final <- ch_df %>%
     mutate(e= c(1:1799),
            price_per_indv = price / Accommodates,
-           city = "ch")
+           city = "Chicago")
   
 #ch_prices <- read.csv("Chicagoprices")       chicago id and price not needed, already in ch_df
 #ch_prices <- ch_prices[-1,] %>%
@@ -152,7 +152,7 @@ write_csv(four_cities, path = "updated_four_cities.csv")
 
 ```{r}
 # this chunk cleans the four_cities csv
-four_cities <- read_csv("updated_four_cities.csv")
+four_cities <- read.csv("updated_four_cities.csv")
 
 #this code replaces all NAs with string 'unspecified' and taking out time specifications in Check.In column
 four_cities[is.na(four_cities)] <- "unspecified"
@@ -169,19 +169,19 @@ four_cities = four_cities %>%
 
 #this code creates a new column, earliest.check.in
 check_in_times_PM <- four_cities %>%
-  filter(Check.In = str_detect(Check.In, "^[1]?[123456789]?PM")) %>%
+  filter(Check.In == str_detect(Check.In, "^[1]?[123456789]?PM")) %>%
   mutate(Earliest.Check.In = str_extract(Check.In, "^[123456789]?PM"))
 
 check_in_times_AM <- four_cities %>%
-filter(Check.In = str_detect(Check.In, "^[1]?[123456789]?AM")) %>%
+filter(Check.In == str_detect(Check.In, "^[1]?[123456789]?AM")) %>%
   mutate(Earliest.Check.In = str_extract(Check.In, "^[1]?[123456789]?AM"))
 
 check_in_flexible <- four_cities %>%
-  filter(Check.In = str_detect(Check.In, "Flexible")) %>%
+  filter(Check.In == str_detect(Check.In, "Flexible")) %>%
   mutate(Earliest.Check.In = "Flexible")
 
 check_in_unspecified <- four_cities %>%
-  filter(Check.In = str_detect(Check.In, "unspecified")) %>%
+  filter(Check.In == str_detect(Check.In, "unspecified")) %>%
   mutate(Earliest.Check.In = "Unspecified")
 
 four_cities <- check_in_times_AM %>%
@@ -210,6 +210,5 @@ names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)",
                         "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
                         "City", "Price.Per.Indv","Earliest.Check.In")
 write_csv(four_cities, path = "updated_cleaned_four_cities.csv")
-
 ```
 

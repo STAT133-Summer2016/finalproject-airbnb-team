@@ -16,14 +16,14 @@ sf_dbl = read_csv("sf_dbl.csv")
 
 sf_dbl <- sf_dbl %>%
   mutate(Room.Type ="Private room") %>%
-  mutate(City = "sf") %>%
+  mutate(City = "San Francisco") %>%
   mutate(Bed = 2)
 colnames(sf_dbl)[6] <- "Bed(s)"
 
 sf_sgl <- read_csv("sf_sgl.csv")
 sf_sgl <- sf_sgl %>%
   mutate(Room.Type ="Private room") %>%
-  mutate(City = "sf") %>%
+  mutate(City = "San Francisco") %>%
   mutate(Bed = 1)
 colnames(sf_sgl)[6] <- "Bed(s)"
 

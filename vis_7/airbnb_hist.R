@@ -1,4 +1,5 @@
 library(ggplot2)
+library(ggthemes)
 
 cities_table <- read.csv("updated_four_cities.csv")
 
@@ -12,7 +13,7 @@ airbnb_hist <- ggplot(cities_table) +
        y = "Density",
        fill = "City",
        title = "Distribution of Airbnb Listing Prices by City") +
-  theme_economist() +
+  theme_minimal() +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
 cities_deviations <- cities_table %>% 
