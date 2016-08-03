@@ -13,22 +13,39 @@ library(tidyr)
 library(stringr)
 
 price_guest_df <- read_csv("updated_cleaned_four_cities.csv") %>%
-  select(Accomodates, Price, City) %>%
+  select(Accomodates, Price, City, Price.Per.Indv) %>%
   mutate(City = factor(City, 
-                       levels = c("la","sf","ch","nyc"),
+                       levels = c("la","sf","ch","ny"),
                        labels= c("Los Angeles","San Francisco","Chicago","New York City")))
-
-  ggplot(price_guest_df, 
+#price per night
+ ggplot(price_guest_df, 
          aes(y = Price, 
              x = Accomodates, 
              color = City)) +
   geom_point(stat= "identity", 
              position = position_dodge()) +
   geom_smooth(method = "lm", formula = y~log(x), se = FALSE) +
- # facet_grid(~City) +
-  scale_y_continuous(breaks = seq(0,1000,100)) +
+  scale_y_log10(breaks = seq(0,1000,100)) +
   scale_x_continuous(breaks = seq(0,13,1)) +
-  labs(y = "Price (USD)", x = "Accomodation (Persons)")
+  labs(y = "Daily Price Per Night (USD)", 
+       x = "Accomodations Per Room (Persons)",
+       title = "Airbnb: Daily Price Trend Based on Persons Per Room") +
+    theme_economist()
+ 
+ #price per person
+  ggplot(price_guest_df, 
+         aes(y = Price.Per.Indv, 
+             x = Accomodates, 
+             color = City)) +
+  geom_point(stat= "identity", 
+             position = position_dodge()) +
+  geom_smooth(method = "lm", formula = y~log(x), se = FALSE) +
+  scale_y_log10(breaks = seq(0,1000,100)) +
+  scale_x_continuous(breaks = seq(0,13,1)) +
+  labs(y = "Price Per Person (USD)", 
+       x = "Accomodations Per Room (Persons)",
+       title = "Airbnb: Per Person Price Trend Based on Persons Per Room") +
+    theme_economist()
 
 ```
 

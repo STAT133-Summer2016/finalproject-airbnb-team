@@ -3,6 +3,7 @@ library(plyr)
 library(dplyr)
 library(stringr)
 library(ggplot2)
+library(ggthemes)
 
 four_cities <- read.csv("updated_cleaned_four_cities.csv")
 
@@ -70,16 +71,25 @@ cleaned_time_df <- full_join(no_twelves_out, cleaned_time_df)
 
 #check in time density plot                            
 ggplot(cleaned_time_df, aes(Check.In, fill = City, colour = City)) +
-  geom_density(alpha = 0.4) +
-  ggtitle("Density Plot of AirBNB Check In Times") +
-  xlab("Time of Day") +
-  ylab("Density") +
-  scale_x_continuous(limits=c(0,24), breaks=seq(0,24,4))
+  geom_density(alpha = 0.6) +
+  labs(x= "Time of Day",
+       y = "Density",
+       title = "Density Plot of Airbnb Check In Times") +
+  scale_x_continuous(limits=c(0,24), 
+                     breaks=seq(0,24,4)) +
+  guides(color = "none") +
+  scale_fill_discrete(labels = c("Chicago", "Los Angeles", "New York City", "San Francisco")) +
+  theme_gdocs()
 
 #check out time density plot
 ggplot(cleaned_time_df, aes(Check.Out, fill = City, colour = City)) +
-  geom_density(alpha = 0.4) +
-  ggtitle("Density Plot of AirBNB Check Out Times") +
-  xlab("Time of Day") +
-  ylab("Density") +
-  scale_x_continuous(limits=c(0,24), breaks=seq(0,24,4))
+  geom_density(alpha = 0.6) +
+  labs(x= "Time of Day",
+       y = "Density",
+       title = "Density Plot of Airbnb Check In Times") +
+  scale_x_continuous(limits=c(0,24), 
+                     breaks=seq(0,24,4)) +
+  guides(color = "none") +
+  scale_fill_discrete(labels = c("Chicago", "Los Angeles", "New York City", "San Francisco")) +
+  theme_gdocs()
+
