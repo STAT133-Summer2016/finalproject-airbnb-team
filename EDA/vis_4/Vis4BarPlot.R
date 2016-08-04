@@ -10,12 +10,6 @@ library(ggthemes)
 
 #property.type
 citydf_1 = read_csv("updated_cleaned_four_cities.csv") %>% 
-  #Relabel cities to full names
-  mutate(city = factor(City, levels = c("la", "ch", "sf", "ny"), 
-                       labels = c("Los Angeles", 
-                                  "Chicago", 
-                                  "San Francisco", 
-                                  "New York"))) %>%
   group_by(City, Property.Type) %>% 
   mutate(dailyavg = mean(Price)) %>% 
   #filter property type so that it only contains the common properties among
@@ -32,7 +26,7 @@ citydf_1 = read_csv("updated_cleaned_four_cities.csv") %>%
 ggplot(citydf_1)+
   geom_bar(aes(x = Property.Type, 
                y = dailyavg, 
-               fill = city), 
+               fill = City), 
            color = "black",
            stat="identity", 
            position = position_dodge(), 
