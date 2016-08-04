@@ -37,10 +37,8 @@ have_discount <- discount %>%
   select(-`Monthly.Discount(%)`, -`Weekly.Discount(%)`)
 
 discount_final <- rbind(no_discount, have_discount) %>%
-  gather(key = time , value = price, Weekly.Price, Monthly.Price) %>%
-  mutate(City = factor(City, 
-                       levels = c("sf","la","ch","ny"),
-                       labels = c("San Francisco","Los Angeles","Chicago","New York City")))
+  gather(key = time , value = price, Weekly.Price, Monthly.Price)
+  
 
 colnames(discount_final)[1] <- "Daily.Price"
 
