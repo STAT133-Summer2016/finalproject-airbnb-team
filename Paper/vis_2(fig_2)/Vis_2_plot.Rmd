@@ -1,0 +1,46 @@
+---
+title: "Untitled"
+author: "judy teng"
+date: "July 31, 2016"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggthemes)
+
+price_guest_df <- read_csv("updated_cleaned_four_cities.csv") %>%
+  select(Accomodates, Price, City, Price.Per.Indv) %>%
+  mutate(City = factor(City, 
+                       levels = c("la","sf","ch","ny"),
+                       labels= c("Los Angeles","San Francisco","Chicago","New York City"))) 
+ #price per person
+ggplot(price_guest_df, 
+         aes(x = factor(Accomodates),
+            y = Price.Per.Indv, 
+             color = City)) +
+  geom_boxplot(stat = "boxplot",
+               position = "dodge",
+               outlier.color = "black",
+               outlier.size = 0.6,
+               outlier.shape = 16) +
+  scale_y_log10(breaks = c(10,20,30,40,50,100,200,400,600,800,1000))+
+  scale_x_discrete(breaks = seq(0,13,1)) +
+  labs( x = "Accomodations Per Room (Persons)",
+        y = "Price Per Person (USD)",
+       title = "Figure 2: Airbnb: Per Person Price Trend Based on Persons Per Room")+
+    facet_grid(~City) +
+   theme_fivethirtyeight() +
+  theme(axis.title.x = element_text(size = 15, face = "bold"),
+        axis.title.y = element_text(size = 15, face = "bold"),
+        axis.text.y = element_text(face = "bold", size = 15, hjust = 0.5, vjust = 0.5),
+        axis.text.x = element_text(face = "bold", size = 13),
+        legend.text = element_text(face = "bold", size = 13),
+        legend.title = element_text(face = "bold", size = 15))
+
+```
+
