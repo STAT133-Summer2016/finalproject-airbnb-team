@@ -99,7 +99,9 @@ ggplot(cleaned_time_df) +
   scale_x_continuous(limits=c(6,24), 
                      breaks=seq(6,24,4)) +
   guides(color = "none") +
-  theme_gdocs()
+  theme_gdocs() +
+  theme(text = element_text(size=17))
+
 
 #check out time density plot
 ggplot(cleaned_time_df) +
@@ -111,5 +113,7 @@ ggplot(cleaned_time_df) +
   scale_x_continuous(limits=c(6,24), 
                      breaks=seq(6,24,4)) +
   guides(color = "none") +
-  theme_gdocs()
+  theme_gdocs() +
+  theme(text = element_text(size=17))
+
 
