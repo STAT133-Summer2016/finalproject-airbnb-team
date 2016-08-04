@@ -15,7 +15,7 @@ hotel_hist <- ggplot(hotels) +
   labs(x = "Price",
        y = "Density",
        title = "Distribution of Hotel Pricing by City") + 
-  theme_economist() +
+  theme_minimal() +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
 hotel_deviations <- hotels %>% 

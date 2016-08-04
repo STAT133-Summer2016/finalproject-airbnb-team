@@ -19,7 +19,7 @@ When you click the **Knit** button a document will be generated that includes bo
 la_dbl <- read_csv("la_dbl.csv")
 la_dbl <- la_dbl %>%
   mutate(Room.Type ="Private room") %>%
-  mutate(City = "") %>%
+  mutate(City = "Los Angeles") %>%
   mutate(Bed = 2)
 colnames(la_dbl)[6] <- "Bed(s)"
 
