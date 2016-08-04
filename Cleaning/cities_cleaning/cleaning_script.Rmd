@@ -1,0 +1,139 @@
+---
+title: "4 cities"
+author: "judy teng"
+date: "July 30, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(WriteXLS)
+library(gdata)
+library(stringr)
+```
+
+
+```{r}
+#this chunk creates a data frame for each city. 
+
+sf_df <- read.xls("SFdf")
+  sf_final <- sf_df %>%
+    mutate(e= c(1:1782),
+           price_per_indv = price / Accommodates,
+           city = "San Francisco") 
+  
+  
+ny_df <- read.xls("NYdf")
+ny_final <- ny_df %>%
+  mutate(e= 1:1800,
+         price_per_indv = as.numeric(price) / as.numeric(Accommodates),
+         city = "New York")
+
+la_df <- read.xls("LAdf")
+  la_final <- la_df %>%
+    mutate(e = c(1:1800),
+           price_per_indv = price / Accommodates,
+           city = "Los Angeles")
+  
+ch_df <- read.xls("Chicagodf.xls")
+  ch_final <- ch_df %>%
+    mutate(e= c(1:1799),
+           price_per_indv = price / Accommodates,
+           city = "Chicago")
+  
+```
+
+
+
+```{r}
+#this chunk creates the 5 csv's with 17 common observations among the 4 cities
+# csv outputs: cleaned_sf.csv, cleaned_la.csv, cleaned_ch.csv, cleaned_ny.csn, four_cities.csv
+
+sf_cols <- names(sf_final)
+la_cols <- names(la_final)
+ny_cols <- names(ny_final)
+ch_cols <- names(ch_final)
+
+# this code finds mutual columns between the four data frames: sf_final, la_final, ch_final, ny_final
+sf_common_cols <- sf_cols[sf_cols %in% la_cols]
+ny_common_cols <- ny_cols[ny_cols %in% la_cols]
+ch_common_cols <- ch_cols[ch_cols %in% la_cols]
+la_common_cols <- la_cols[la_cols %in% sf_common_cols]
+
+sf_final_2 <- sf_final %>%
+  select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
+         Property.type, Room.type, Extra.people, Weekly.discount, 
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(sf_final_2, path = "updated_cleaned_sf.csv")
+
+la_final_2 <- la_final %>%
+  select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
+         Property.type, Room.type, Extra.people, Weekly.discount, 
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(la_final_2, path = "updated_cleaned_la.csv")
+
+ch_final_2 <- ch_final %>%
+  select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
+         Property.type, Room.type, Extra.people, Weekly.discount, 
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(ch_final_2, path = "updated_cleaned_ch.csv")
+
+ny_final_2 <- ny_final %>%
+  select(Accommodates, Bathrooms, Bedrooms, Beds, Check.In, Check.Out, 
+         Property.type, Room.type, Extra.people, Weekly.discount, 
+         Monthly.discount, Cancellation, Response.time, ID, price, e, city, price_per_indv)
+write_csv(ny_final_2, path = "updated_cleaned_ny.csv")
+
+four_cities <- rbind(sf_final_2,ny_final_2) %>%
+  rbind(la_final_2) %>%
+  rbind(ch_final_2)
+  
+write_csv(four_cities, path = "updated_four_cities.csv")  
+```
+
+
+```{r}
+# this chunk cleans the four_cities csv
+four_cities <- read_csv("updated_four_cities.csv")
+
+#this code replaces all NAs with string 'unspecified' and taking out time specifications in Check.In column
+four_cities[is.na(four_cities)] <- "unspecified"
+four_cities = four_cities %>%
+  mutate(Check.In = str_replace(Check.In, "Anytime after ","")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(next day\\)", "")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(midnight\\)", "")) %>%
+  mutate(Check.In = str_replace(Check.In, " \\(noon\\)", ""))
+
+four_cities = four_cities %>%
+  mutate(Check.Out = str_replace(Check.Out, " \\(midnight\\)", "")) %>%
+  mutate(Check.Out = str_replace(Check.Out, " \\(noon\\)", ""))
+
+#this code cleans the Bathroom column; take out "shared" or "private"
+four_cities <- four_cities %>%
+  mutate(Bathrooms = str_replace(Bathrooms, " \\(Private\\)", "")) %>%
+  mutate(Bathrooms = str_replace(Bathrooms, " \\(Shared\\)", ""))
+
+#this code cleans the Extra.people column
+four_cities <- four_cities %>%
+  mutate(Extra.people = str_replace(Extra.people," / night after", "")) %>%
+  mutate(Extra.people = str_replace(Extra.people," [1]?[02345] guest[s]?", "")) 
+
+#this code cleans the Weekly.discount and Monthly.discount columns
+four_cities <- four_cities %>%
+  mutate(Weekly.discount = str_replace(Weekly.discount,"%","")) %>%
+  mutate(Monthly.discount = str_replace(Monthly.discount, "%", ""))
+
+names(four_cities) <- c("Accomodates", "Bathroom(s)", "Bedroom(s)", "Bed(s)", 
+                        "Check.In", "Check.Out", "Property.Type", "Room.Type",
+                        "Cost.Per.Extra.Person", "Weekly.Discount(%)", "Monthly.Discount(%)",
+                        "Cancellation.Policy", "Response.Time", "ID", "Price", "e", 
+                        "City", "Price.Per.Indv")
+write_csv(four_cities, path = "updated_cleaned_four_cities.csv")
+```
+
