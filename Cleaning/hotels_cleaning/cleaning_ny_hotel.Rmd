@@ -1,0 +1,33 @@
+---
+title: "cleaning_ny_hotel"
+author: "Clara Chun"
+date: "August 3, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+ny_dbl <- read_csv("ny_dbl.csv")
+ny_dbl <- ny_dbl %>%
+  mutate(Room.Type ="Private room") %>%
+  mutate(City = "") %>%
+  mutate(Bed = 2)
+colnames(ny_dbl)[6] <- "Bed(s)"
+
+ny_sgl <- read_csv("ny_sgl.csv")
+ny_sgl <- ny_sgl %>%
+  mutate(Room.Type ="Private room") %>%
+  mutate(City = "Chicago") %>%
+  mutate(Bed = 1)
+colnames(ny_sgl)[6] <- "Bed(s)"
+
+ny_final <- rbind(ny_sgl,ny_dbl)
+write_csv(ny_final, path = "cleaned_ny_hotel.csv")
+```
+
+
