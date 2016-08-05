@@ -10,8 +10,6 @@ four_cities <- read.csv("updated_cleaned_four_cities.csv")
 
 ##CLEANING CHECKED IN
 
-View(unique(four_cities$Check.In))
-
 #disregarding those observations with an unspecified/flexible check in or check out time
 four_cities <- four_cities %>% 
   filter(!Check.In == "Unspecified") %>% 
@@ -95,7 +93,7 @@ ggplot(cleaned_time_df) +
   labs(x= "Time of Day",
        y = "Density",
        title = "Density Plot of Airbnb Check In Times") +
-  facet_wrap(~City, labeller = as_labeller(city_names)) +
+  facet_wrap(~City) +
   scale_x_continuous(limits=c(6,24), 
                      breaks=seq(6,24,4)) +
   guides(color = "none") +
@@ -108,8 +106,8 @@ ggplot(cleaned_time_df) +
   geom_density(alpha = 0.6, aes(Check.Out, fill = Price.Range)) +
   labs(x= "Time of Day",
        y = "Density",
-       title = "Density Plot of Airbnb Check In Times") +
-  facet_wrap(~City, labeller = as_labeller(city_names)) +
+       title = "Density Plot of Airbnb Check Out Times") +
+  facet_wrap(~City) +
   scale_x_continuous(limits=c(6,24), 
                      breaks=seq(6,24,4)) +
   guides(color = "none") +
