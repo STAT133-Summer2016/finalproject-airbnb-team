@@ -19,11 +19,11 @@ airbnb_hist <- ggplot(cities_table) +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
 cities_deviations <- cities_table %>% 
-  mutate(SU = (Price - mean(cities_table$Price)) / sd(cities_table$Price)) %>% 
   group_by(City) %>% 
-  dplyr::summarise(sd(SU))
+  dplyr::summarise(relative_SD = sd(Price) / mean(Price))
+ 
 
-SDmean_all <- sd(cities_table$Price) / mean(cities_table$Price) 
+sd(cities_table$Price) / mean(cities_table$Price) 
 
 ggsave("airbnb_hist.pdf", airbnb_hist)
 ggsave("airbnb_hist.png", airbnb_hist)
@@ -46,9 +46,8 @@ hotel_hist <- ggplot(hotels) +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
 hotel_deviations <- hotels %>% 
-  mutate(SU = (price.num - mean(price.num)) / sd(price.num)) %>% 
   group_by(City) %>% 
-  dplyr::summarise(sd(SU))
+  dplyr::summarise(relative_SD = sd(price.num) / mean(price.num))
 
 sd(hotels$price.num) / mean(hotels$price.num)
 
