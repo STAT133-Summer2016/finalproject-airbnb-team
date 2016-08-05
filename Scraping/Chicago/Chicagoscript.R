@@ -20,7 +20,7 @@ PriceFunction <- function(x) {
     as.numeric()
 }
 
-pricelistings <- lapply(as.list(1:5), PriceFunction) %>% 
+pricelistings <- lapply(as.list(1:100), PriceFunction) %>% 
   Reduce(c, .)
 
 
@@ -40,7 +40,7 @@ IDsFunction <- function(x) {
     str_replace_all("\\$([0-9]*)\\.", "\\1")
 }
 
-IDs <- lapply(as.list(1:5), IDsFunction) %>% 
+IDs <- lapply(as.list(1:100), IDsFunction) %>% 
   Reduce(c, .)
 
 write_csv(as.data.frame(IDs), "Chicagids")
