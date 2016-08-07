@@ -42,9 +42,7 @@ ggplot(citydf_1)+
   theme(
     axis.title.x = element_text(size = 13, face = "bold"),
     axis.title.y = element_text(size = 13, face = "bold"),
-    plot.title = element_text(size = 15, face = "bold")
-    
-  )
+    plot.title = element_text(size = 15, face = "bold")) +
   theme_gdocs()
 
 
