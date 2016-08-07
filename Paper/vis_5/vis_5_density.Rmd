@@ -18,7 +18,7 @@ four_cities <- read.csv("updated_cleaned_four_cities.csv")
 ```{r}
 #disregarding those observations with an unspecified/flexible check in or check out time
 four_cities <- four_cities %>% 
-  filter(!Check.In == "Unspecified") %>% 
+  filter(!Check.In == "unspecified") %>% 
   filter(!Check.In == "Flexible") %>% 
   filter(!is.na(Check.In)) %>% 
   filter(!Check.Out == "unspecified")
@@ -33,12 +33,13 @@ no_twelves_in <- four_cities %>%
   mutate(Check.In = ifelse(str_detect(Check.In, "AM"),
                             as.numeric(str_replace_all(Check.In, "AM", "")), #as.numeric coerces NAs
                             as.numeric(str_replace_all(Check.In, "PM", ""))+12))
+
 #for cases of midnight and noontimes
 cleaned_in_df <- four_cities %>% 
   filter(str_detect(Check.In, "12")) %>% 
   mutate(Check.In = ifelse(str_detect(Check.In, "AM"),
-                            as.numeric(str_replace_all(Check.In, "AM", "")), #as.numeric coerces NAs
-                            as.numeric(str_replace_all(Check.In, "PM", ""))+12))
+                            as.numeric(str_replace_all(Check.In, "12AM", "0")), #as.numeric coerces NAs
+                            as.numeric(str_replace_all(Check.In, "PM", ""))))
   
 
 cleaned_in_df <- full_join(no_twelves_in, cleaned_in_df)
@@ -52,7 +53,6 @@ cleaned_in_df <- full_join(no_twelves_in, cleaned_in_df)
 ##CLEANING CHECKED OUT
 
 ```{r}
-
 
 no_twelves_out <- four_cities %>% 
   filter(!str_detect(Check.Out, "12")) %>% 
