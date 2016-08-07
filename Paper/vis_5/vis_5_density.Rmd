@@ -63,8 +63,8 @@ no_twelves_out <- four_cities %>%
 cleaned_out_df <- four_cities %>% 
   filter(str_detect(Check.Out, "12")) %>% 
   mutate(Check.Out = ifelse(str_detect(Check.Out, "AM"),
-                            as.numeric(str_replace_all(Check.Out, "AM", "")),
-                            as.numeric(str_replace_all(Check.Out, "PM", ""))+12))
+                            as.numeric(str_replace_all(Check.Out, "12AM", "0")),
+                            as.numeric(str_replace_all(Check.Out, "PM", ""))))
 
 cleaned_out_df <- full_join(no_twelves_out, cleaned_out_df)
 
