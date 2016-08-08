@@ -39,11 +39,12 @@ ggplot(citydf_1)+
        x = "Type of Room",
        y = "Price") +
   scale_fill_discrete(name = "Type of Property") +
+  theme_gdocs() +
   theme(
     axis.title.x = element_text(size = 13, face = "bold"),
     axis.title.y = element_text(size = 13, face = "bold"),
-    plot.title = element_text(size = 15, face = "bold")) +
-  theme_gdocs()
+    plot.title = element_text(size = 15, face = "bold")) 
+
 
 
   
