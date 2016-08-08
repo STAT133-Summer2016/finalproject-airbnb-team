@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggthemes)
 
-cities_table <- read.csv("updated_four_cities.csv")
+cities_table <- read.csv("updated_cleaned_four_cities.csv")
 
 airbnb_hist <- ggplot(cities_table) +
   geom_histogram(aes(x = Price,
@@ -14,7 +14,7 @@ airbnb_hist <- ggplot(cities_table) +
   labs(x = "Price",
        y = "Density",
        fill = "City",
-       title = "Distribution of Airbnb Listing Prices by City") +
+       title = "Figure 1a: Distribution of Airbnb Listing Prices by City") +
   theme_minimal() +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
@@ -41,7 +41,7 @@ hotel_hist <- ggplot(hotels) +
   scale_x_continuous(limits = c(0, 800)) +
   labs(x = "Price",
        y = "Density",
-       title = "Distribution of Hotel Pricing by City") + 
+       title = "Figure 1b: Distribution of Hotel Pricing by City") + 
   theme_minimal() +
   scale_fill_manual(values = c("yellow", "red", "blue", "green4"))
 
@@ -53,3 +53,12 @@ sd(hotels$price.num) / mean(hotels$price.num)
 
 ggsave("hotel_hist.pdf", hotel_hist)
 ggsave("hotel_hist.png", hotel_hist)
+
+
+hotels %>% 
+  group_by(City) %>% 
+  dplyr::summarise(mean(price.num))
+
+cities_table %>% 
+  group_by(City) %>% 
+  dplyr::summarise(mean(Price))
