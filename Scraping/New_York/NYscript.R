@@ -20,12 +20,6 @@ PriceFunction <- function(x) {
     as.numeric()
 }
 
-pricelistings <- lapply(as.list(1:100), PriceFunction) %>% 
-  Reduce(c, .)
-
-
-write_csv(as.data.frame(pricelistings), "NYprices")
-Sys.sleep(120)
 
 #scrapes the IDs from relevant attributes from each page for page 1 to 100
 IDsFunction <- function(x) {
@@ -40,20 +34,6 @@ IDsFunction <- function(x) {
     str_replace_all("\\$([0-9]*)\\.", "\\1")
 }
 
-IDs <- lapply(as.list(1:100), IDsFunction) %>% 
-  Reduce(c, .)
-
-write_csv(as.data.frame(IDs), "NYids")
-Sys.sleep(120)
-
-#gives indices for which the function pauses (3 minutes)
-pause_indices <- c(82, 130, 201, 289, 310, 
-                   390, 435, 502, 578, 624, 
-                   698, 737, 822, 903, 981,
-                   1008, 1072, 1120, 1199, 
-                   1277, 1352, 1411, 1501,
-                   1583, 1633, 1702, 1780,
-                   1834)
 
 #function that scrapes the attribute list for each listing 
 AttributeFunction <- function(x) {
@@ -77,18 +57,6 @@ AttributeFunction <- function(x) {
   }
 }
 
-attr_list <- lapply(as.list(1:length(IDs)), AttributeFunction)
-
-#possible variable names...
-collumns <- c("Accommodates", "Bedrooms", "Bathrooms", "Bed type",
-              "Property type", "Room type", "Weekly discount", 
-              "Monthly discount", "Cancellation", "ID", "price", 
-              "Check In", "Check Out", "Cleaning Fee", "Security Deposit",
-              "Response time", "Weekly Price", "Pet Owner", "Monthly Price", 
-              "Beds", "Check.In", "Check.Out", "Property.type", "Room.type", 
-              "Extra.people", "Weekly.discount", "Monthly.discount", 
-              "Response.time")
-
 #converts each element of attr_list into single row dataframe
 #data frames are then combined by row, and unlisted columns are replaced with NA
 i <- 0
@@ -110,6 +78,40 @@ DataFrameList <- function(x) {
       mutate(ID = IDs[i], price = pricelistings[i])
   }
 }
+
+pricelistings <- lapply(as.list(1:100), PriceFunction) %>% 
+  Reduce(c, .)
+
+
+write_csv(as.data.frame(pricelistings), "NYprices")
+Sys.sleep(120)
+
+IDs <- lapply(as.list(1:100), IDsFunction) %>% 
+  Reduce(c, .)
+
+write_csv(as.data.frame(IDs), "NYids")
+Sys.sleep(120)
+
+#gives indices for which the function pauses (3 minutes)
+pause_indices <- c(82, 130, 201, 289, 310, 
+                   390, 435, 502, 578, 624, 
+                   698, 737, 822, 903, 981,
+                   1008, 1072, 1120, 1199, 
+                   1277, 1352, 1411, 1501,
+                   1583, 1633, 1702, 1780,
+                   1834)
+
+attr_list <- lapply(as.list(1:length(IDs)), AttributeFunction)
+
+#possible variable names...
+collumns <- c("Accommodates", "Bedrooms", "Bathrooms", "Bed type",
+              "Property type", "Room type", "Weekly discount", 
+              "Monthly discount", "Cancellation", "ID", "price", 
+              "Check In", "Check Out", "Cleaning Fee", "Security Deposit",
+              "Response time", "Weekly Price", "Pet Owner", "Monthly Price", 
+              "Beds", "Check.In", "Check.Out", "Property.type", "Room.type", 
+              "Extra.people", "Weekly.discount", "Monthly.discount", 
+              "Response.time")
 
 df_list <- lapply(attr_list, DataFrameList) 
 

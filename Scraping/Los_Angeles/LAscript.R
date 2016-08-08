@@ -20,12 +20,6 @@ PriceFunction <- function(x) {
     as.numeric()
 }
 
-pricelistings <- lapply(as.list(1:100), PriceFunction) %>% 
-  Reduce(c, .)
-
-
-write_csv(as.data.frame(pricelistings), "LAprices")
-Sys.sleep(120)
 
 #scrapes the IDs from relevant attributes from each page for page 1 to 100
 IDsFunction <- function(x) {
@@ -39,6 +33,39 @@ IDsFunction <- function(x) {
     str_extract_all("\\$[0-9]*\\.") %>% 
     str_replace_all("\\$([0-9]*)\\.", "\\1")
 }
+
+
+#function that scrapes the attribute list for each listing 
+AttributeFunction <- function(x) {
+  print(x)
+  if(x %in% pause_indices) {
+    Sys.sleep(180)
+    read_html(
+      str_c("https://www.airbnb.com/rooms/",
+            IDs[x],
+            "?s=TPHZXwbi")) %>% 
+      html_nodes("div.col-md-6 div") %>% 
+      html_text()
+  } else {
+    Sys.sleep(sample(seq(10, 12, .1), size = 1))
+    read_html(
+      str_c("https://www.airbnb.com/rooms/",
+            IDs[x],
+            "?s=TPHZXwbi")) %>% 
+      html_nodes("div.col-md-6 div") %>% 
+      html_text()
+  }
+}
+
+
+pricelistings <- lapply(as.list(1:100), PriceFunction) %>% 
+  Reduce(c, .)
+
+
+write_csv(as.data.frame(pricelistings), "LAprices")
+Sys.sleep(120)
+
+
 
 IDs <- lapply(as.list(1:100), IDsFunction) %>% 
   Reduce(c, .)
@@ -77,17 +104,6 @@ AttributeFunction <- function(x) {
   }
 }
 
-attr_list <- lapply(as.list(1:length(IDs)), AttributeFunction)
-
-#possible variable names...
-collumns <- c("Accommodates", "Bedrooms", "Bathrooms", "Bed type",
-              "Property type", "Room type", "Weekly discount", 
-              "Monthly discount", "Cancellation", "ID", "price", 
-              "Check In", "Check Out", "Cleaning Fee", "Security Deposit",
-              "Response time", "Weekly Price", "Pet Owner", "Monthly Price", 
-              "Beds", "Check.In", "Check.Out", "Property.type", "Room.type", 
-              "Extra.people", "Weekly.discount", "Monthly.discount", 
-              "Response.time")
 
 #converts each element of attr_list into single row dataframe
 #data frames are then combined by row, and unlisted columns are replaced with NA
@@ -110,6 +126,20 @@ DataFrameList <- function(x) {
       mutate(ID = IDs[i], price = pricelistings[i])
   }
 }
+
+
+attr_list <- lapply(as.list(1:length(IDs)), AttributeFunction)
+
+#possible variable names...
+collumns <- c("Accommodates", "Bedrooms", "Bathrooms", "Bed type",
+              "Property type", "Room type", "Weekly discount", 
+              "Monthly discount", "Cancellation", "ID", "price", 
+              "Check In", "Check Out", "Cleaning Fee", "Security Deposit",
+              "Response time", "Weekly Price", "Pet Owner", "Monthly Price", 
+              "Beds", "Check.In", "Check.Out", "Property.type", "Room.type", 
+              "Extra.people", "Weekly.discount", "Monthly.discount", 
+              "Response.time")
+
 
 df_list <- lapply(attr_list, DataFrameList) 
 
