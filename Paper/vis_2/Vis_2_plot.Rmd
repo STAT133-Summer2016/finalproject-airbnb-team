@@ -20,7 +20,7 @@ price_guest_df <- read_csv("updated_cleaned_four_cities.csv") %>%
 ggplot(price_guest_df, 
          aes(x = factor(Accomodates),
             y = Price.Per.Indv, 
-             color = City)) +
+             fill = City)) +
   geom_boxplot(stat = "boxplot",
                position = "dodge",
                outlier.color = "black",
@@ -33,7 +33,7 @@ ggplot(price_guest_df,
         y = "Price Per Person (USD)",
        title = "Figure 2: Airbnb: Per Person Price Trend Based on Persons Per Room")+
     facet_grid(~City) +
-   theme_base() +
+   theme_gdocs() +
   theme(axis.title.x = element_text(size = 15, face = "bold"),
         axis.title.y = element_text(size = 15, face = "bold"),
         axis.text.y = element_text(face = "bold", size = 15, hjust = 0.5, vjust = 0.5),
