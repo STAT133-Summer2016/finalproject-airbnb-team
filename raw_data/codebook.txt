@@ -1,64 +1,56 @@
-    						CODEBOOK FOR AIRBNB LISTING DATA
-                            	SCRAPED FROM AIRBNB.COM    
+CODEBOOK FOR AIRBNB LISTING DATA
+SCRAPED FROM AIRBNB.COM    
                             	
 Codebook prepared by Airbnb Team, based on data frames initially scraped from Airbnb.com.
 
-					Number of variables scraped varied from city to city, 
-						but all variables are described here below.  
+Number of variables scraped varied from city to city, 
+but all variables are described here below.  
 						
                           	 
 VARIABLE NAME      			CLASS           			NOTES    
------------------------------------------------------------------------------------------                              
-Accommodates:				numeric						Number of people.
+----------------------------------------------------------------------------------------------------------------------                          
+Accommodates:				numeric					Number of people.
 
-Bathrooms: 					numeric						Number of bathrooms.
+Bathrooms: 				numeric					Number of bathrooms.
 
-Bedrooms: 					numeric						Number of bedrooms.
+Bedrooms: 				numeric					Number of bedrooms.
 
-Beds: 						numeric						Number of beds.
+Beds: 					numeric					Number of beds.
 
-Check.In: 					character					Lists range of check in
-														times, if ever, in AM/PM form.														
+Check.In: 				character				Lists range of check in
+										times, if ever, in AM/PM form.														
 
-Check.Out: 					character					Lists range of check out
-														times, if ever, in AM/PM form.														
+Check.Out: 				character				Lists range of check out
+										times, if ever, in AM/PM form.														
 
-Property.type: 				character					Apartment? House? Tent?
+Property.type: 				character				Apartment? House? Tent?
 
-Room.type: 					character					Do you get a private room or are 
-														you renting the entire house?
+Room.type: 				character				Do you get a private room or are 
+										you renting the entire house?
 
-Extra.people:				character					Describes extra charges applied
-														given a certain amount of guests.
+Extra.people:				character				Describes extra charges applied
+										given a certain amount of guests.
 
-Cleaning.Fee:				character					Given in dollars.
+Cleaning.Fee:				character				Given in dollars.
 
-Security.Deposit:			character					Given in dollars.
+Security.Deposit:			character				Given in dollars.
 
-Weekly.discount:			character					Specifies if such a discount 
-														exists for each week booked.														
+Weekly.discount:			character				Specifies if such a discount 
+										exists for each week booked.														
 
-Monthly.discount:			character					Specifies if such a discount 
-														exists for each month booked.														
+Monthly.discount:			character				Specifies if such a discount 
+										exists for each month booked.											
+Cancellation:				character				Is policy strict? Moderate? Flexible?														
+Response.time:				character				Describes average response time
+										from owner to inquiries.												
+ID:					character				Contains unique ID number to
+										access individual listings.												
+price:					numeric					Given as numeric value..
 
-Cancellation:				character					Is policy strict? Moderate? 
-														Flexible?														
+Bed.type:				character				Sofa? Real bed? Futon? Air bed?
 
-Response.time:				character					Describes average response time
-														from owner to inquiries.														
+Pet.Owner:				character				Describes whether or not owner owns pets (cats/dogs).														
+Weekly.Price:				character				For special cases where weekly and monthly rates differ.
 
-ID:							character					Contains unique ID number to
-														access individual listings.														
-price:						numeric
-
-Bed.type:					character					Sofa? Real bed? Futon? Air bed?
-
-Pet.Owner:					character					Describes whether or not owner
-														owns pets (cats/dogs).														
-
-Weekly.Price:				character					For special cases where weekly
-														and monthly rates differ.
-
-Monthly.Price:				character					For special cases where weekly
-														and monthly rates differ.
+Monthly.Price:				character				For special cases where weekly and monthly rates differ.
 
