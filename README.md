@@ -3,15 +3,15 @@ This project explores a cross-sectional comparison of Airbnb and the hotel indus
 
 
 ## Folders
-* __raw_data__
+* __raw_data:__
 This folder contains the raw data files for each city that was scraped through the Airbnb site
-* __clean_data__
+* __clean_data:__
 This folder contains two folders: ***cities_cleaning*** and ***hotels_cleaning***. The ***cities_cleaning*** folder contains ***cleaning_script.Rmd*** that produces the ***updated_cleaned_four_cities.csv*** file, and inside the ***hotels_cleaning*** file, the ***final_hotels.R*** produces the ***cleaned_four_hotels.csv*** file. These csv’s are used for analysis.   
-* __eda__
+* __eda:__
 This folder contains exploratory data analysis. 
-* __functions__
-* __presentation__
-* __paper__
+* __functions:__
+* __presentation:__
+* __paper:__
 
 
 ## Packages
