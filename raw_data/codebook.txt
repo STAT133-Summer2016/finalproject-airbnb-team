@@ -1,10 +1,10 @@
-CODEBOOK FOR AIRBNB LISTING DATA
-SCRAPED FROM AIRBNB.COM    
+						CODEBOOK FOR AIRBNB LISTING DATA
+						     SCRAPED FROM AIRBNB.COM    
                             	
-Codebook prepared by Airbnb Team, based on data frames initially scraped from Airbnb.com.
+		     Codebook prepared by Airbnb Team, based on data frames initially scraped from Airbnb.com.
 
-Number of variables scraped varied from city to city, 
-but all variables are described here below.  
+					Number of variables scraped varied from city to city, 
+					     but all variables are described here below.  
 						
                           	 
 VARIABLE NAME      			CLASS           			NOTES    
