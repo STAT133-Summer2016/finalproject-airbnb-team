@@ -31,3 +31,6 @@ This folder contains scripts of functions that were written for analysis.
 ## Instructions to Produce the Final Paper
 Open RStudio and knit the paper
 
+- - - -
+![airbnb](http://www.underconsideration.com/brandnew/archives/airbnb_logo_detail.png)
+
