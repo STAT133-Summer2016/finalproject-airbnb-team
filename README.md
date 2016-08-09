@@ -1,6 +1,7 @@
 # Airbnb Final Project
 This project explores a cross-sectional comparison of Airbnb and the hotel industry in four US cities (Chicago, Los Angeles, New York, and San Francisco), as well as Airbnb pricing and accommodation patterns for each city. 
 
+- - - -
 
 ## Folders
 * __raw_data:__
@@ -14,6 +15,7 @@ This folder contains scripts of functions that were written for analysis.
 * __presentation:__ This folder contains the pdf of slides that were used to present the findings in the analysis.
 * __paper:__ This folder contains the final report of the analysis in pdf and Rmd files. 
 
+- - - -
 
 ## Packages
 * dplyr
@@ -24,6 +26,8 @@ This folder contains scripts of functions that were written for analysis.
 * stringr
 * tidyr
 
+- - - - 
 
 ## Instructions to Produce the Final Paper
 Open RStudio and knit the paper
+
