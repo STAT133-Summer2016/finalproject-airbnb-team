@@ -1,3 +1,6 @@
+---
+output: pdf_document
+---
 
 
 ```{r setup, include=FALSE}
@@ -11,7 +14,7 @@ library(tidyr)
 library(scales)
 library(ggthemes)
 ```
-
+![Airbnb Logo](http://www.underconsideration.com/brandnew/archives/airbnb_logo_detail.png)
 
 #Exploring the Role of Airbnb as a Rising Market Force in the Sharing Economy 
 
