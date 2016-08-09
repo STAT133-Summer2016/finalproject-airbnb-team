@@ -1,5 +1,6 @@
 # Airbnb Final Project
-This project explores a cross-sectional comparison of Airbnb and the hotel industry in four US cities (Chicago, Los Angeles, New York, and San Francisco), as well as Airbnb pricing and accommodation patterns for each city. 
+
+Sharing economies remain relatively new, and as such the role they are to play in their respective industry is uncertain. Here we ask whether the market catered to by Airbnb in relation to existing hotel business is competitive or complementary. Additionally, we examine the degree to which trends within the platform persist across location. Our study offers a cross-sectional comparison of Airbnb listings and the hotel industry in four major cities across the US, (Chicago, Los Angeles, New York, and San Francisco) as well as a deeper analysis of Airbnb pricing and accommodation patterns for each city. Ultimately, we find that Airbnb could continue to pose a threat to incumbent industry, by offering a variety of amenities at a relatively low price point, and that trends could be susceptible to variations in location depending on the nature of the local market, though further research is likely needed.
 
 - - - -
 
