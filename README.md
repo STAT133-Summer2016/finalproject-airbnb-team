@@ -9,9 +9,10 @@ This folder contains the raw data files for each city that was scraped through t
 This folder contains two folders: ***cities_cleaning*** and ***hotels_cleaning***. The ***cities_cleaning*** folder contains ***cleaning_script.Rmd*** that produces the ***updated_cleaned_four_cities.csv*** file, and inside the ***hotels_cleaning*** file, the ***final_hotels.R*** produces the ***cleaned_four_hotels.csv*** file. These csv’s are used for analysis.   
 * __eda:__
 This folder contains exploratory data analysis. 
-* __functions:__
-* __presentation:__
-* __paper:__
+* __functions:__ 
+This folder contains scripts of functions that were written for analysis.
+* __presentation:__ This folder contains the pdf of slides that were used to present the findings in the analysis.
+* __paper:__ This folder contains the final report of the analysis in pdf and Rmd files. 
 
 
 ## Packages
