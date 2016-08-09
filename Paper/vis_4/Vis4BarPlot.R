@@ -5,7 +5,6 @@ library(readr)
 library(stringr)
 library(scales)
 library(ggthemes)
-library(scales)
 
 
 #property.type
