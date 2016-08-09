@@ -1,14 +1,11 @@
-						CODEBOOK FOR AIRBNB LISTING DATA
-						     SCRAPED FROM AIRBNB.COM    
-                            	
-		     Codebook prepared by Airbnb Team, based on data frames initially scraped from Airbnb.com.
+CODEBOOK FOR AIRBNB LISTING DATA SCRAPED FROM AIRBNB.COM 
 
-					Number of variables scraped varied from city to city, 
-					     but all variables are described here below.  
+Codebook prepared by Airbnb Team, based on data frames initially scraped from Airbnb.com.
+Number of variables scraped varied from city to city, but all variables are described here below.  
 						
                           	 
 VARIABLE NAME      			CLASS           			NOTES    
-----------------------------------------------------------------------------------------------------------------------                          
+----------------------------------------------------------------------------------------------------------------------------------                          
 Accommodates:				numeric					Number of people.
 
 Bathrooms: 				numeric					Number of bathrooms.
