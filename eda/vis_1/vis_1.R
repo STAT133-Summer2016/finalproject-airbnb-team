@@ -21,7 +21,8 @@ ggplot(hotel_citydf, aes(`Bed(s)`, Avg, fill = Property.Form))+
   theme_calc() +
   scale_color_calc()
 
-#avg daily price for airbnb seems to be significantly cheaper compared to that of hotels
+#avg daily price for airbnb seems to be significantly cheaper compared to 
+#that of hotels
 
-#need to explore variability/SD in prices for airbnb & hotels; add another figure depicting
-#findings about SD in airbnb & hotel prices
+#need to explore variability/SD in prices for airbnb & hotels; add 
+#another figure depicting findings about SD in airbnb & hotel prices

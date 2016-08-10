@@ -58,7 +58,8 @@ AttributeFunction <- function(x) {
 
 
 #converts each element of attr_list into single row dataframe
-#data frames are then combined by row, and unlisted columns are replaced with NA
+#data frames are then combined by row, and unlisted columns 
+#are replaced with NA
 i <- 0
 DataFrameList <- function(x) {
   i <- i + 1

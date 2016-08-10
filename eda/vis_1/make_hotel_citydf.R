@@ -10,7 +10,10 @@ hoteldf = read_csv("cleaned_four_hotels.csv") %>%
          Price = parse_number(Price),
          City = factor(City, 
                        levels = c("la","sf","ch","nyc"),
-                       labels= c("Los Angeles","San Francisco","Chicago","New York City")))
+                       labels= c("Los Angeles",
+                                 "San Francisco",
+                                 "Chicago",
+                                 "New York City")))
  hoteldf =  hoteldf %>%
    select(Room.Type, City, `Bed(s)`, Property.Form, Price) %>% 
    group_by(City, `Bed(s)`) %>% 
@@ -20,7 +23,10 @@ citydf = read_csv("updated_cleaned_four_cities.csv") %>%
   mutate(Property.Form = "airbnb",
          City = factor(City, 
                        levels = c("la","sf","ch","ny"),
-                       labels= c("Los Angeles","San Francisco","Chicago","New York City"))) %>% 
+                       labels= c("Los Angeles",
+                                 "San Francisco",
+                                 "Chicago",
+                                 "New York City"))) %>% 
   select(Room.Type, City, `Bed(s)`, Property.Form, Price) %>% 
   filter(`Bed(s)` < 3) %>% 
   group_by(City, `Bed(s)`) %>% 

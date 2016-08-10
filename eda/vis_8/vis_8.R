@@ -26,7 +26,8 @@ ggplot(citydf_1)+
   scale_y_continuous(labels = dollar_format(prefix = "$"),
                      limits = c(0,300),
                      breaks = seq(0,300,100)) +
-  labs(title = str_wrap("Figure 4: Average Daily Price of Airbnb by Property Type"),
+  labs(title = str_wrap(
+    "Figure 4: Average Daily Price of Airbnb by Property Type"),
        x = "Type of Room",
        y = "Price") +
   scale_fill_discrete(name = "Type of Property") +

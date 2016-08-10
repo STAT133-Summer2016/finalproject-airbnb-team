@@ -16,7 +16,8 @@ four_cities <- read.csv("updated_cleaned_four_cities.csv")
 ##CLEANING CHECKED IN
 
 ```{r}
-#disregarding those observations with an unspecified/flexible check in or check out time
+#disregarding those observations with an unspecified/flexible check in 
+#or check out time
 four_cities <- four_cities %>% 
   filter(!Check.In == "unspecified") %>% 
   filter(!Check.In == "Flexible") %>% 
@@ -26,13 +27,14 @@ four_cities <- four_cities %>%
 #only concerned with earliest check in times; removing ranges
 four_cities$Check.In <- str_replace_all(four_cities$Check.In, "[ ]-.*", "")
 #cleaning the times
-#filters only pm check in values, removes pm, converts into numeric value and adds 12
-#to put time into a 0-24hr interval for graphing
+#filters only pm check in values, removes pm, converts into 
+#numeric value and adds 12 to put time into a 0-24hr interval for graphing
 no_twelves_in <- four_cities %>% 
   filter(!str_detect(Check.In, "12")) %>% 
   mutate(Check.In = ifelse(str_detect(Check.In, "AM"),
                             as.numeric(str_replace_all(Check.In, "AM", "")), #as.numeric coerces NAs
-                            as.numeric(str_replace_all(Check.In, "PM", ""))+12))
+                            as.numeric(str_replace_all(Check.In, "PM", ""))+
+                             12))
 
 #for cases of midnight and noontimes
 cleaned_in_df <- four_cities %>% 
@@ -58,13 +60,18 @@ no_twelves_out <- four_cities %>%
   filter(!str_detect(Check.Out, "12")) %>% 
   mutate(Check.Out = ifelse(str_detect(Check.Out, "AM"),
                             as.numeric(str_replace_all(Check.Out, "AM", "")), #as.numeric coerces NAs
-                            as.numeric(str_replace_all(Check.Out, "PM", ""))+12))
+                            as.numeric(str_replace_all(Check.Out, "PM", ""))+
+                              12))
 
 cleaned_out_df <- four_cities %>% 
   filter(str_detect(Check.Out, "12")) %>% 
   mutate(Check.Out = ifelse(str_detect(Check.Out, "AM"),
-                            as.numeric(str_replace_all(Check.Out, "12AM", "0")),
-                            as.numeric(str_replace_all(Check.Out, "PM", ""))))
+                            as.numeric(str_replace_all(Check.Out, 
+                                                       "12AM", 
+                                                       "0")),
+                            as.numeric(str_replace_all(Check.Out, 
+                                                       "PM", 
+                                                       ""))))
 
 cleaned_out_df <- full_join(no_twelves_out, cleaned_out_df)
 
@@ -93,7 +100,11 @@ cleaned_df <- cleaned_df %>%
   mutate(Price.Range = ifelse(Price >= 200,
                               "200+", as.character(Price.Range)))
 
-cleaned_df$Price.Range <- ordered(cleaned_df$Price.Range, levels = c("0-49", "50-99", "100-149", "150-199", "200+"))
+cleaned_df$Price.Range <- ordered(cleaned_df$Price.Range, levels = c("0-49", 
+                                                                     "50-99",
+                                                                     "100-149", 
+                                                                     "150-199", 
+                                                                     "200+"))
 ```
 
 
@@ -102,8 +113,8 @@ cleaned_df$Price.Range <- ordered(cleaned_df$Price.Range, levels = c("0-49", "50
 ```{r}
 #check in time density plot
 
-#justification for filling by price range - are cheaper price ranges more accomodating
-#in terms of check in times
+#justification for filling by price range - are cheaper price ranges more 
+#accomodating in terms of check in times
 
 city_names <- c(
   `ch` = "Chicago",
